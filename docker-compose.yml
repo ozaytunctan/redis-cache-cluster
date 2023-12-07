@@ -86,6 +86,27 @@ services:
       redisnet:
         ipv4_address: 192.169.0.8
 
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis1:6379,local:redis2:6379,local:redis3:6379,local:redis4:6379,local:redis5:6379,local:redis6:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis1
+      - redis2
+      - redis3
+      - redis4
+      - redis5
+      - redis-cache-app
+    networks:
+      redisnet:
+        ipv4_address: 192.169.0.9
+
 networks:
   redisnet:
     driver: bridge
